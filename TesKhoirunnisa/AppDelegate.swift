@@ -15,6 +15,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var initialViewController: UIViewController
+        print(UserDefaults.standard.bool(forKey: "firstTime"))
+        
+        if(UserDefaults.standard.object(forKey: "firstTime") == nil){
+            initialViewController = storyboard.instantiateViewController(identifier: "FirstTimeScreen")
+            UserDefaults.standard.set(true, forKey: "firstTime")
+            UserDefaults.standard.synchronize()
+        } else {
+            initialViewController = storyboard.instantiateViewController(withIdentifier: "Dashboard")
+        }
         return true
     }
 
