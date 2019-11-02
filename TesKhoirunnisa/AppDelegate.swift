@@ -11,23 +11,45 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        var vc: UIViewController?
+        
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var initialViewController: UIViewController
         print(UserDefaults.standard.bool(forKey: "firstTime"))
         
         if(UserDefaults.standard.object(forKey: "firstTime") == nil){
-            initialViewController = storyboard.instantiateViewController(identifier: "FirstTimeScreen")
-            UserDefaults.standard.set(true, forKey: "firstTime")
-            UserDefaults.standard.synchronize()
+//            initialViewController = storyboard.instantiateViewController(identifier: "FirstTimeScreen")
+//            UserDefaults.standard.set(true, forKey: "firstTime")
+//            UserDefaults.standard.synchronize()
+            let launchStoryBoard = UIStoryboard(name: "Masuk", bundle: nil)
+            vc = launchStoryBoard.instantiateViewController(withIdentifier: "FirstTimeScreen")
+        
         } else {
-            initialViewController = storyboard.instantiateViewController(withIdentifier: "Dashboard")
+//            initialViewController = storyboard.instantiateViewController(withIdentifier: "Dashboard")
+            let mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+            vc = mainStoryBoard.instantiateInitialViewController()!
+            
         }
+        
+        let navigationController = UINavigationController(rootViewController: vc!)
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.setNavigationBarHidden(true, animated: false)
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
         return true
     }
+    
+//    func setFirstUse(first: Int = 1) {
+//        UserDefaults.standard.set(first, forKey: K)
+//    }
 
     // MARK: UISceneSession Lifecycle
 

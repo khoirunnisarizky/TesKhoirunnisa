@@ -38,10 +38,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if emailUser.text?.isEmpty == false && passwordUser.text?.isEmpty == false {
+        if emailUser.text?.isEmpty == false {
+            if passwordUser.text?.isEmpty == false {
             masukButtonOutlet.isEnabled = true
-        } else {
+            } else {
             masukButtonOutlet.isEnabled = false
+            }
         }
     }
 }
